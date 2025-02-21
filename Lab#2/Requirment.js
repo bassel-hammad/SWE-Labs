@@ -1,11 +1,11 @@
-/*IMPORTANT NOTES
-1- you are using JS Name Casing (CamelCasing)
-2- make this code as clean as possible 
-3- apply all the concepts you learned during this lab (Naming, comments,  functions)
+/* IMPORTANT NOTES
+1- You are using JS Name Casing (CamelCasing)
+2- Make this code as clean as possible 
+3- Apply all the concepts you learned during this lab (Naming, comments, functions)
 */
 
-class pt {
-  //this constructor is used to construct the pt class
+class Point {
+  // Constructor to initialize the Point class
   constructor(coordX, coordY) {
     this.coordX = coordX;
     this.coordY = coordY;
@@ -13,84 +13,89 @@ class pt {
 }
 
 class Rectangle {
-  constructor(startingPoint, w, h) {
-    if (!h || h <= 0 || !w || w <= 0) {
-      throw Error("invalid Width and Height"); // throws an error in cas of width or height < 0
+  constructor(startingPoint, width, height) {
+    if (!height || height <= 0 || !width || width <= 0) {
+      throw Error("Invalid width and height"); // Throws an error if width or height is <= 0
     }
     this.startingPoint = startingPoint;
-    this.w = w; // w is the width
-    this.h = h; // h is the height
+    this.width = width;
+    this.height = height;
   }
 
-  // ***************
-  // METHODS
-  // ***************
-
-  area() {
-    return this.w * this.h;
+  // Calculate the area of the rectangle
+  calculateArea() {
+    return this.width * this.height;
   }
 
+  // Calculate the perimeter of the rectangle
   calculatePerimeter() {
-    return 2 * this.w + 2 * this.h;
+    return 2 * (this.width + this.height);
   }
-  // getPerimeter() {
-  //   return 2 * this.w + 2 * this.h;
-  // }
 
-  updateMyHeight(height) {
-    if (height && height > 0) {
-      this.h = height;
+  // Update the height of the rectangle
+  updateHeight(newHeight) {
+    if (newHeight && newHeight > 0) {
+      this.height = newHeight;
+    } else {
+      throw Error("Invalid height"); // Throws an error if new height is <= 0
     }
-    //TODO: handle case of updating the height of square
   }
 
+  // Update the rectangle's properties
   update({ startingPoint, width, height }) {
     if (!height || height <= 0 || !width || width <= 0) {
-      throw Error("invalid Width and Height"); // throws an error in cas of width or height < 0
+      throw Error("Invalid width and height"); // Throws an error if width or height is <= 0
     }
     this.startingPoint = startingPoint;
-    this.w = width;
-    this.h = height;
+    this.width = width;
+    this.height = height;
   }
 
-  fetchHeight() {
-    return this.h;
+  // Get the height of the rectangle
+  getHeight() {
+    return this.height;
   }
 
-  //function that print the endpoints
-  endPoints() {
-    const topRight = this.startingPoint.coordX + this.broad;
-    const bottomLeft = this.startingPoint.coordY + this.h;
-    console.log("End Point X-Axis (Top Right): " + topRight);
-    console.log("End Point Y-Axis (Bottom Left): " + bottomLeft);
-  }
-
+  // Get the width of the rectangle
   getWidth() {
-    return this.w;
+    return this.width;
+  }
+
+  // Print the endpoints of the rectangle
+  printEndpoints() {
+    const topRightX = this.startingPoint.coordX + this.width;
+    const bottomLeftY = this.startingPoint.coordY + this.height;
+    console.log("End Point X-Axis (Top Right): " + topRightX);
+    console.log("End Point Y-Axis (Bottom Left): " + bottomLeftY);
   }
 }
 
-function buildObject(Width, x, Height, y) {
-  const mainPoint = new pt(x, y);
-  const rect = new Rectangle(mainPoint, Width, Height);
-  return rect;
+// Build a rectangle object
+function buildRectangle(width, coordX, height, coordY) {
+  const startingPoint = new Point(coordX, coordY);
+  const rectangle = new Rectangle(startingPoint, width, height);
+  return rectangle;
 }
 
-function construct_Square(cord_x, CordY, SquareHeight) {
-  let square;
-  if (!SquareHeight || SquareHeight <= 0) {
-    square = buildObject(SquareHeight, cord_x, SquareHeight, CordY);
+// Construct a square object
+function constructSquare(coordX, coordY, sideLength) {
+  if (!sideLength || sideLength <= 0) {
+    throw Error("Invalid side length"); // Throws an error if side length is <= 0
   }
-  const square_area = square.area();
+  const square = buildRectangle(sideLength, coordX, sideLength, coordY);
+  const squareArea = square.calculateArea();
   const squarePerimeter = square.calculatePerimeter();
-  console.log("square Area ", square_area);
-  console.log("square Perimeter ", squarePerimeter);
+  console.log("Square Area: ", squareArea);
+  console.log("Square Perimeter: ", squarePerimeter);
+  return square;
 }
 
-const myRect = buildObject(2, 3, 5, 4);
-const sq = construct_Square();
+// Example usage
+const myRectangle = buildRectangle(2, 3, 5, 4);
+const mySquare = constructSquare(1, 1, 4);
 
-console.log(sq.calculatePerimeter());
-sq.endPoints();
+console.log("Rectangle Perimeter: ", myRectangle.calculatePerimeter());
+myRectangle.printEndpoints();
 
-myRect.updateMyHeight(3);
+myRectangle.updateHeight(3);
+console.log("Updated Rectangle Height: ", myRectangle.getHeight());
