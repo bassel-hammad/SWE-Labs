@@ -16,6 +16,19 @@ const processOrderPromise = (orderId) => {
   });
 };
 
+// --------------------------------------------------------------------
+// ASYNC/AWAIT
+// --------------------------------------------------------------------
+
+const processOrderAwait = async (orderId) => {
+  try {
+    const orderDetails = await processOrderPromise(orderId);
+    console.log("Order details (Async/Await):", orderDetails);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 // Call processOrderPromise() properly to console log the returned order details and catch any errors
 processOrderPromise(100);
   
@@ -29,18 +42,7 @@ processOrderPromise('invalid')
     console.error("Error:", error);
   });
 
-// --------------------------------------------------------------------
-// ASYNC/AWAIT
-// --------------------------------------------------------------------
 
-const processOrderAwait = async (orderId) => {
-  try {
-    const orderDetails = await processOrderPromise(orderId);
-    console.log("Order details (Async/Await):", orderDetails);
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
 
 // Call processOrderAwait()
 processOrderAwait(200);
